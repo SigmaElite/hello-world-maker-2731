@@ -1,12 +1,19 @@
-// Update this page (the content is just a fallback if you fail to update the page)
-
 const Index = () => {
+  const letters = "hello".split("");
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+      <h1 className="font-[var(--font-display)] text-[clamp(4rem,20vw,16rem)] font-light tracking-tight text-foreground lowercase">
+        {letters.map((letter, index) => (
+          <span
+            key={index}
+            className="inline-block animate-letter"
+            style={{ animationDelay: `${index * 0.1}s` }}
+          >
+            {letter}
+          </span>
+        ))}
+      </h1>
     </div>
   );
 };
