@@ -2,13 +2,20 @@ import { useState, useEffect } from "react";
 import { MapPin, Clock, Phone, Instagram, ChevronDown, Star, Sparkles, Wine, Music, Users, Quote, ArrowRight, Zap, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+// Import images
+import heroBg from "@/assets/hero-bg.jpg";
+import cocktail1 from "@/assets/cocktail-1.jpg";
+import cocktail2 from "@/assets/cocktail-2.jpg";
+import cocktail3 from "@/assets/cocktail-3.jpg";
+import cocktail4 from "@/assets/cocktail-4.jpg";
+
 const cocktails = [
-  { name: "Golden Hour", description: "Whiskey, honey, lemon, ginger beer, gold flakes", price: "$16", tag: "Signature" },
-  { name: "Midnight Rose", description: "Gin, rose water, elderflower, sparkling", price: "$18", tag: "Popular" },
-  { name: "Velvet Thunder", description: "Dark rum, coffee liqueur, cream, espresso", price: "$15", tag: null },
-  { name: "Sunset Boulevard", description: "Tequila, passion fruit, lime, chili rim", price: "$17", tag: "Spicy" },
-  { name: "Electric Dreams", description: "Vodka, blue curaçao, lychee, prosecco", price: "$19", tag: "New" },
-  { name: "Smoky Affair", description: "Mezcal, pineapple, jalapeño, agave", price: "$20", tag: "Premium" },
+  { name: "Golden Hour", description: "Whiskey, honey, lemon, ginger beer, gold flakes", price: "$16", tag: "Signature", image: cocktail1 },
+  { name: "Midnight Rose", description: "Gin, rose water, elderflower, sparkling", price: "$18", tag: "Popular", image: cocktail2 },
+  { name: "Velvet Thunder", description: "Dark rum, coffee liqueur, cream, espresso", price: "$15", tag: null, image: cocktail3 },
+  { name: "Sunset Boulevard", description: "Tequila, passion fruit, lime, chili rim", price: "$17", tag: "Spicy", image: cocktail4 },
+  { name: "Electric Dreams", description: "Vodka, blue curaçao, lychee, prosecco", price: "$19", tag: "New", image: cocktail1 },
+  { name: "Smoky Affair", description: "Mezcal, pineapple, jalapeño, agave", price: "$20", tag: "Premium", image: cocktail2 },
 ];
 
 const features = [
@@ -54,7 +61,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden grain">
       {/* Animated Background Orbs - Global */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div 
@@ -69,6 +76,13 @@ const Index = () => {
           className="absolute w-[300px] h-[300px] bg-accent/15 rounded-full glow-orb animate-float-reverse"
           style={{ bottom: '10%', left: '20%', animationDelay: '4s' }}
         />
+        {/* Additional floating particles */}
+        <div className="absolute w-2 h-2 bg-accent rounded-full animate-particle" style={{ top: '20%', left: '30%' }} />
+        <div className="absolute w-3 h-3 bg-accent/60 rounded-full animate-particle" style={{ top: '60%', left: '70%', animationDelay: '1s' }} />
+        <div className="absolute w-2 h-2 bg-accent/40 rounded-full animate-particle" style={{ top: '80%', left: '15%', animationDelay: '2s' }} />
+        <div className="absolute w-4 h-4 bg-accent/30 rounded-full animate-particle" style={{ top: '40%', left: '80%', animationDelay: '3s' }} />
+        <div className="absolute w-2 h-2 bg-accent/50 rounded-full animate-particle" style={{ top: '70%', left: '40%', animationDelay: '4s' }} />
+        
         {/* Mouse follower */}
         <div 
           className="absolute w-64 h-64 bg-accent/10 rounded-full glow-orb transition-all duration-1000 ease-out"
@@ -80,16 +94,16 @@ const Index = () => {
       </div>
 
       {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrollY > 50 ? 'bg-background/80 backdrop-blur-xl border-b border-border' : ''}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrollY > 50 ? 'glass' : ''}`}>
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <a href="#" className="font-display text-2xl font-semibold tracking-wide">
-            <span className="text-gradient">Harry's</span>
+            <span className="text-gradient animate-flicker">Harry's</span>
           </a>
           <div className="hidden md:flex items-center gap-8 font-body text-sm">
-            <a href="#menu" className="text-muted-foreground hover:text-foreground transition-colors">Menu</a>
-            <a href="#events" className="text-muted-foreground hover:text-foreground transition-colors">Events</a>
-            <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">About</a>
-            <a href="#contact" className="text-muted-foreground hover:text-foreground transition-colors">Contact</a>
+            <a href="#menu" className="text-muted-foreground hover:text-foreground transition-colors hover:scale-105 transform">Menu</a>
+            <a href="#events" className="text-muted-foreground hover:text-foreground transition-colors hover:scale-105 transform">Events</a>
+            <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors hover:scale-105 transform">About</a>
+            <a href="#contact" className="text-muted-foreground hover:text-foreground transition-colors hover:scale-105 transform">Contact</a>
             <Button variant="outline" size="sm" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground">
               Book a Table
             </Button>
@@ -98,9 +112,24 @@ const Index = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center noise">
+      <section className="relative min-h-screen flex items-center justify-center">
+        {/* Hero Background Image */}
+        <div 
+          className="absolute inset-0 z-0"
+          style={{ transform: `translateY(${scrollY * 0.3}px)` }}
+        >
+          <img 
+            src={heroBg} 
+            alt="Harry's Bar interior" 
+            className="w-full h-full object-cover animate-zoom-pulse"
+            style={{ animationDuration: '20s' }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50" />
+        </div>
+
         {/* Animated geometric shapes */}
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden z-[1]">
           <div 
             className="absolute top-20 left-20 w-32 h-32 border border-accent/20 rounded-full animate-rotate-slow"
             style={{ transform: `translateY(${scrollY * 0.1}px)` }}
@@ -109,55 +138,52 @@ const Index = () => {
             className="absolute top-40 right-32 w-24 h-24 border border-accent/10 animate-rotate-reverse"
             style={{ transform: `translateY(${scrollY * -0.05}px)` }}
           />
-          <div 
-            className="absolute bottom-32 left-1/4 w-16 h-16 bg-accent/10 animate-morph"
-          />
-          <div 
-            className="absolute top-1/3 right-1/4 w-4 h-4 bg-accent rounded-full animate-sparkle"
-          />
-          <div 
-            className="absolute bottom-1/4 right-1/3 w-3 h-3 bg-accent rounded-full animate-sparkle"
-            style={{ animationDelay: '0.5s' }}
-          />
-          <div 
-            className="absolute top-1/2 left-1/3 w-2 h-2 bg-accent rounded-full animate-sparkle"
-            style={{ animationDelay: '1s' }}
-          />
+          <div className="absolute bottom-32 left-1/4 w-16 h-16 bg-accent/10 animate-morph" />
+          <div className="absolute top-1/3 right-1/4 w-4 h-4 bg-accent rounded-full animate-sparkle animate-orbit" style={{ animationDelay: '0s' }} />
+          <div className="absolute bottom-1/4 right-1/3 w-3 h-3 bg-accent rounded-full animate-sparkle" style={{ animationDelay: '0.5s' }} />
+          <div className="absolute top-1/2 left-1/3 w-2 h-2 bg-accent rounded-full animate-sparkle" style={{ animationDelay: '1s' }} />
+          {/* Orbiting elements */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="w-3 h-3 bg-accent/40 rounded-full animate-orbit" style={{ animationDuration: '15s' }} />
+          </div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="w-2 h-2 bg-accent/60 rounded-full animate-orbit" style={{ animationDuration: '25s', animationDirection: 'reverse' }} />
+          </div>
         </div>
 
         <div className="relative z-10 container mx-auto px-6 text-center">
           <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
             <p 
-              className="font-body text-accent uppercase tracking-[0.3em] text-sm mb-6 animate-fade-up"
+              className="font-body text-accent uppercase tracking-[0.3em] text-sm mb-6 animate-blur-in"
               style={{ animationDelay: '0.2s' }}
             >
               Welcome to
             </p>
             <h1 
-              className="font-display text-[clamp(4rem,18vw,14rem)] font-semibold leading-none mb-4 animate-fade-up text-shadow"
+              className="font-display text-[clamp(4rem,18vw,14rem)] font-semibold leading-none mb-4 animate-blur-in text-shadow"
               style={{ animationDelay: '0.4s' }}
             >
-              <span className="text-gradient">Harry's</span>
+              <span className="text-gradient animate-gradient-x bg-[length:200%_200%]" style={{ background: 'linear-gradient(90deg, hsl(32, 85%, 50%), hsl(40, 90%, 65%), hsl(32, 85%, 50%), hsl(40, 90%, 65%))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundSize: '300% 100%' }}>Harry's</span>
             </h1>
             <p 
-              className="font-display text-[clamp(1.5rem,4vw,2.5rem)] italic text-muted-foreground mb-8 animate-fade-up"
+              className="font-display text-[clamp(1.5rem,4vw,2.5rem)] italic text-muted-foreground mb-8 animate-blur-in"
               style={{ animationDelay: '0.6s' }}
             >
               Cocktails & Good Vibes
             </p>
             <p 
-              className="font-body text-muted-foreground max-w-xl mx-auto text-lg mb-10 leading-relaxed animate-fade-up"
+              className="font-body text-muted-foreground max-w-xl mx-auto text-lg mb-10 leading-relaxed animate-slide-up"
               style={{ animationDelay: '0.8s' }}
             >
               Where every cocktail tells a story and every night becomes unforgettable
             </p>
             <div 
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-up"
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up"
               style={{ animationDelay: '1s' }}
             >
               <Button 
                 size="lg" 
-                className="bg-accent text-accent-foreground hover:bg-accent/90 font-body px-8 py-6 text-base shadow-glow hover-glow transition-all group"
+                className="bg-accent text-accent-foreground hover:bg-accent/90 font-body px-8 py-6 text-base shadow-glow hover-glow transition-all group animate-pulse-glow"
               >
                 Book a Table
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -176,11 +202,11 @@ const Index = () => {
         {/* Scroll indicator */}
         <a 
           href="#features"
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground hover:text-accent transition-colors cursor-pointer animate-fade-in"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground hover:text-accent transition-colors cursor-pointer animate-fade-in z-10"
           style={{ animationDelay: '1.5s' }}
         >
           <span className="font-body text-xs uppercase tracking-widest">Scroll</span>
-          <ChevronDown className="w-5 h-5 animate-bounce" />
+          <ChevronDown className="w-5 h-5 animate-bounce-slow" />
         </a>
       </section>
 
@@ -191,10 +217,10 @@ const Index = () => {
             {features.map((feature, index) => (
               <div 
                 key={feature.title}
-                className="text-center p-8 rounded-2xl bg-gradient-card border border-border hover-lift hover-glow transition-all animate-fade-up"
+                className="text-center p-8 rounded-2xl bg-gradient-card border border-border hover-lift hover-glow transition-all animate-fade-up group"
                 style={{ animationDelay: `${index * 0.15}s` }}
               >
-                <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4 animate-pulse-glow">
+                <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4 animate-pulse-glow group-hover:animate-swing">
                   <feature.icon className="w-8 h-8 text-accent" />
                 </div>
                 <h3 className="font-display text-xl mb-2">{feature.title}</h3>
@@ -207,16 +233,16 @@ const Index = () => {
 
       {/* Stats Bar */}
       <section className="py-12 border-y border-border relative overflow-hidden">
-        <div className="absolute inset-0 bg-accent/5" />
+        <div className="absolute inset-0 bg-accent/5 animate-wave" style={{ animationDuration: '20s' }} />
         <div className="container mx-auto px-6 relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div 
                 key={stat.label} 
-                className="text-center animate-fade-up"
+                className="text-center animate-fade-up group"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <p className="font-display text-4xl md:text-5xl text-gradient mb-1">{stat.value}</p>
+                <p className="font-display text-4xl md:text-5xl text-gradient mb-1 group-hover:animate-bounce-slow">{stat.value}</p>
                 <p className="font-body text-muted-foreground text-sm">{stat.label}</p>
               </div>
             ))}
@@ -224,39 +250,52 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Menu Section */}
+      {/* Menu Section with Images */}
       <section id="menu" className="py-20 relative noise">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
-            <p className="font-body text-accent uppercase tracking-[0.2em] text-sm mb-3">Discover</p>
+            <p className="font-body text-accent uppercase tracking-[0.2em] text-sm mb-3 animate-sway">Discover</p>
             <h2 className="font-display text-4xl md:text-5xl font-semibold mb-4">
               Our <span className="text-gradient">Signature</span> Cocktails
             </h2>
-            <div className="w-24 h-0.5 bg-gradient-gold mx-auto" />
+            <div className="w-24 h-0.5 bg-gradient-gold mx-auto animate-shimmer" style={{ backgroundSize: '200% 100%' }} />
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl mx-auto">
             {cocktails.map((cocktail, index) => (
               <div 
                 key={cocktail.name}
-                className="group relative p-6 rounded-2xl bg-gradient-card border border-border hover:border-accent/30 hover-lift transition-all animate-fade-up"
+                className="group relative rounded-2xl bg-gradient-card border border-border hover:border-accent/30 hover-lift transition-all animate-fade-up overflow-hidden"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                {cocktail.tag && (
-                  <span className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-body font-medium bg-accent/20 text-accent border border-accent/30">
-                    {cocktail.tag}
-                  </span>
-                )}
-                <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-4 group-hover:animate-pulse-glow">
-                  <Wine className="w-6 h-6 text-accent" />
+                {/* Cocktail Image */}
+                <div className="relative h-48 overflow-hidden shine">
+                  <img 
+                    src={cocktail.image} 
+                    alt={cocktail.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
+                  {cocktail.tag && (
+                    <span className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-body font-medium bg-accent/90 text-accent-foreground border border-accent/30 animate-pulse-glow">
+                      {cocktail.tag}
+                    </span>
+                  )}
                 </div>
-                <h3 className="font-display text-2xl mb-2 group-hover:text-gradient transition-all">
-                  {cocktail.name}
-                </h3>
-                <p className="font-body text-muted-foreground text-sm mb-4 leading-relaxed">
-                  {cocktail.description}
-                </p>
-                <p className="font-display text-xl text-accent">{cocktail.price}</p>
+                <div className="p-6">
+                  <h3 className="font-display text-2xl mb-2 group-hover:text-gradient transition-all">
+                    {cocktail.name}
+                  </h3>
+                  <p className="font-body text-muted-foreground text-sm mb-4 leading-relaxed">
+                    {cocktail.description}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <p className="font-display text-xl text-accent">{cocktail.price}</p>
+                    <Button size="sm" variant="outline" className="border-accent/30 text-accent hover:bg-accent hover:text-accent-foreground opacity-0 group-hover:opacity-100 transition-opacity">
+                      Order
+                    </Button>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -276,7 +315,7 @@ const Index = () => {
 
       {/* Events Section */}
       <section id="events" className="py-20 bg-gradient-dark relative">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-accent/5 blur-3xl rounded-full" />
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-accent/5 blur-3xl rounded-full animate-wave" />
         <div className="container mx-auto px-6 relative z-10">
           <div className="text-center mb-12">
             <p className="font-body text-accent uppercase tracking-[0.2em] text-sm mb-3">What's On</p>
@@ -292,11 +331,11 @@ const Index = () => {
                 className="relative p-6 rounded-2xl bg-gradient-card border border-border hover-lift hover-glow transition-all animate-fade-up overflow-hidden group"
                 style={{ animationDelay: `${index * 0.15}s` }}
               >
-                <div className="absolute top-0 right-0 w-20 h-20 bg-accent/10 rounded-full blur-2xl group-hover:bg-accent/20 transition-colors" />
-                <span className="inline-block px-3 py-1 rounded-full text-xs font-body font-semibold bg-accent text-accent-foreground mb-4">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-accent/10 rounded-full blur-2xl group-hover:bg-accent/20 transition-colors animate-glow-pulse" />
+                <span className="inline-block px-3 py-1 rounded-full text-xs font-body font-semibold bg-accent text-accent-foreground mb-4 animate-bounce-slow">
                   {event.day}
                 </span>
-                <event.icon className="w-10 h-10 text-accent mb-4" />
+                <event.icon className="w-10 h-10 text-accent mb-4 group-hover:animate-swing" />
                 <h3 className="font-display text-2xl mb-2">{event.name}</h3>
                 <p className="font-body text-muted-foreground text-sm">{event.desc}</p>
               </div>
@@ -319,15 +358,15 @@ const Index = () => {
             {reviews.map((review, index) => (
               <div 
                 key={review.name}
-                className="p-6 rounded-2xl bg-gradient-card border border-border hover-lift transition-all animate-fade-up"
+                className="p-6 rounded-2xl bg-gradient-card border border-border hover-lift transition-all animate-fade-up group"
                 style={{ animationDelay: `${index * 0.15}s` }}
               >
-                <Quote className="w-8 h-8 text-accent/30 mb-4" />
+                <Quote className="w-8 h-8 text-accent/30 mb-4 group-hover:animate-sway" />
                 <p className="font-body text-foreground mb-4 leading-relaxed">"{review.text}"</p>
                 <div className="flex items-center gap-2">
                   <div className="flex">
                     {[...Array(review.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 text-accent fill-accent" />
+                      <Star key={i} className="w-4 h-4 text-accent fill-accent animate-sparkle" style={{ animationDelay: `${i * 0.1}s` }} />
                     ))}
                   </div>
                   <span className="font-body text-muted-foreground text-sm">— {review.name}</span>
@@ -338,9 +377,9 @@ const Index = () => {
         </div>
       </section>
 
-      {/* About Section */}
+      {/* About Section with enhanced image */}
       <section id="about" className="py-20 bg-gradient-dark relative overflow-hidden">
-        <div className="absolute -left-1/4 top-0 w-1/2 h-full bg-accent/5 blur-3xl rounded-full" />
+        <div className="absolute -left-1/4 top-0 w-1/2 h-full bg-accent/5 blur-3xl rounded-full animate-drift" />
         <div className="container mx-auto px-6 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="animate-slide-right">
@@ -366,35 +405,37 @@ const Index = () => {
               </Button>
             </div>
             <div className="relative animate-slide-left" style={{ animationDelay: '0.2s' }}>
-              <div className="aspect-square rounded-2xl bg-gradient-card border border-border overflow-hidden shadow-card relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-40 h-40 rounded-full border-2 border-accent/30 flex items-center justify-center mx-auto mb-4 animate-pulse-glow animate-rotate-slow">
-                      <div className="w-32 h-32 rounded-full border border-accent/20 flex items-center justify-center animate-rotate-reverse">
-                        <Sparkles className="w-12 h-12 text-accent" />
-                      </div>
-                    </div>
-                    <p className="font-display text-3xl text-gradient">Harry's</p>
-                    <p className="font-body text-muted-foreground text-sm">Est. 2019</p>
-                  </div>
+              <div className="aspect-square rounded-2xl overflow-hidden shadow-card relative shine group">
+                <img 
+                  src={heroBg} 
+                  alt="Harry's Bar atmosphere"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <p className="font-display text-3xl text-gradient animate-flicker">Harry's</p>
+                  <p className="font-body text-muted-foreground text-sm">Est. 2019</p>
                 </div>
               </div>
               {/* Decorative elements */}
-              <div className="absolute -top-4 -right-4 w-24 h-24 border border-accent/20 rounded-full animate-float" />
-              <div className="absolute -bottom-8 -left-8 w-32 h-32 border border-accent/10 rounded-full animate-float-reverse" />
+              <div className="absolute -top-4 -right-4 w-24 h-24 border border-accent/20 rounded-full animate-float animate-rotate-slow" />
+              <div className="absolute -bottom-8 -left-8 w-32 h-32 border border-accent/10 rounded-full animate-float-reverse animate-rotate-reverse" />
+              <div className="absolute top-1/2 -right-6 w-4 h-4 bg-accent rounded-full animate-sparkle" />
             </div>
           </div>
         </div>
       </section>
 
       {/* Instagram Section */}
-      <section className="py-16 relative">
-        <div className="container mx-auto px-6 text-center">
+      <section className="py-16 relative overflow-hidden">
+        {/* Animated gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-r from-accent/5 via-accent/10 to-accent/5 animate-gradient-x" />
+        <div className="container mx-auto px-6 text-center relative z-10">
           <a 
             href="#" 
             className="inline-flex items-center gap-3 text-muted-foreground hover:text-accent transition-colors group"
           >
-            <Instagram className="w-6 h-6" />
+            <Instagram className="w-6 h-6 group-hover:animate-swing" />
             <span className="font-body text-lg">Follow us @harrysbar</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
@@ -412,8 +453,8 @@ const Index = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12">
-            <div className="text-center p-6 rounded-2xl bg-gradient-card border border-border hover-lift transition-all">
-              <div className="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4">
+            <div className="text-center p-6 rounded-2xl bg-gradient-card border border-border hover-lift transition-all group">
+              <div className="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4 group-hover:animate-bounce-slow">
                 <MapPin className="w-6 h-6 text-accent" />
               </div>
               <h3 className="font-display text-xl mb-2">Location</h3>
@@ -422,8 +463,8 @@ const Index = () => {
                 New York, NY
               </p>
             </div>
-            <div className="text-center p-6 rounded-2xl bg-gradient-card border border-border hover-lift transition-all">
-              <div className="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4">
+            <div className="text-center p-6 rounded-2xl bg-gradient-card border border-border hover-lift transition-all group">
+              <div className="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4 group-hover:animate-bounce-slow">
                 <Clock className="w-6 h-6 text-accent" />
               </div>
               <h3 className="font-display text-xl mb-2">Hours</h3>
@@ -432,8 +473,8 @@ const Index = () => {
                 Sun — Thu: 6PM — 2AM
               </p>
             </div>
-            <div className="text-center p-6 rounded-2xl bg-gradient-card border border-border hover-lift transition-all">
-              <div className="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4">
+            <div className="text-center p-6 rounded-2xl bg-gradient-card border border-border hover-lift transition-all group">
+              <div className="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4 group-hover:animate-bounce-slow">
                 <Phone className="w-6 h-6 text-accent" />
               </div>
               <h3 className="font-display text-xl mb-2">Reservations</h3>
@@ -447,7 +488,7 @@ const Index = () => {
           <div className="text-center">
             <Button 
               size="lg" 
-              className="bg-accent text-accent-foreground hover:bg-accent/90 font-body px-12 py-6 text-base shadow-glow hover-glow transition-all group"
+              className="bg-accent text-accent-foreground hover:bg-accent/90 font-body px-12 py-6 text-base shadow-glow hover-glow transition-all group animate-pulse-glow"
             >
               Book Your Table
               <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -461,13 +502,13 @@ const Index = () => {
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="font-display text-xl">
-              <span className="text-gradient">Harry's</span>
+              <span className="text-gradient animate-flicker">Harry's</span>
             </div>
             <div className="flex gap-6">
-              <a href="#" className="text-muted-foreground hover:text-accent transition-colors hover:scale-110 transform">
+              <a href="#" className="text-muted-foreground hover:text-accent transition-colors hover:scale-110 transform hover:animate-swing">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-accent transition-colors hover:scale-110 transform">
+              <a href="#" className="text-muted-foreground hover:text-accent transition-colors hover:scale-110 transform hover:animate-swing">
                 <Phone className="w-5 h-5" />
               </a>
             </div>
