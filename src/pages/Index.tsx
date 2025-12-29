@@ -1,78 +1,97 @@
 import { useState, useEffect } from "react";
-import { MapPin, Clock, Phone, Instagram, ChevronDown, Star, Sparkles } from "lucide-react";
+import { MapPin, Clock, Phone, Instagram, ChevronDown, Star, Sparkles, Wine, Music, Users, Quote, ArrowRight, Zap, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const cocktails = [
-  {
-    name: "Noir Sunset",
-    description: "Виски, амаретто, вишневый ликёр, апельсин",
-    price: "650₽",
-    tag: "Signature",
-  },
-  {
-    name: "Midnight Gold",
-    description: "Ром, маракуйя, лайм, шампанское",
-    price: "720₽",
-    tag: "Популярный",
-  },
-  {
-    name: "Velvet Shadow",
-    description: "Джин, малина, розмарин, тоник",
-    price: "580₽",
-    tag: null,
-  },
-  {
-    name: "Dark Empress",
-    description: "Текила, голубая кюрасао, лайм, соль",
-    price: "690₽",
-    tag: "Новинка",
-  },
-  {
-    name: "Golden Hour",
-    description: "Водка, St. Germain, персик, просекко",
-    price: "750₽",
-    tag: "Premium",
-  },
-  {
-    name: "Smoky Affair",
-    description: "Мескаль, ананас, халапеньо, агава",
-    price: "820₽",
-    tag: null,
-  },
+  { name: "Golden Hour", description: "Whiskey, honey, lemon, ginger beer, gold flakes", price: "$16", tag: "Signature" },
+  { name: "Midnight Rose", description: "Gin, rose water, elderflower, sparkling", price: "$18", tag: "Popular" },
+  { name: "Velvet Thunder", description: "Dark rum, coffee liqueur, cream, espresso", price: "$15", tag: null },
+  { name: "Sunset Boulevard", description: "Tequila, passion fruit, lime, chili rim", price: "$17", tag: "Spicy" },
+  { name: "Electric Dreams", description: "Vodka, blue curaçao, lychee, prosecco", price: "$19", tag: "New" },
+  { name: "Smoky Affair", description: "Mezcal, pineapple, jalapeño, agave", price: "$20", tag: "Premium" },
 ];
 
 const features = [
-  { icon: Sparkles, title: "Авторские коктейли", desc: "60+ уникальных рецептов" },
-  { icon: Star, title: "Премиум алкоголь", desc: "Редкие сорта со всего мира" },
-  { icon: Clock, title: "До последнего гостя", desc: "Работаем без спешки" },
+  { icon: Sparkles, title: "Craft Cocktails", desc: "60+ unique recipes" },
+  { icon: Star, title: "Premium Spirits", desc: "Rare finds worldwide" },
+  { icon: Clock, title: "Open Late", desc: "Until the last guest" },
+];
+
+const events = [
+  { day: "FRI", name: "Jazz Nights", desc: "Live jazz from 9PM", icon: Music },
+  { day: "SAT", name: "DJ Sessions", desc: "House & deep vibes", icon: Zap },
+  { day: "SUN", name: "Chill Sundays", desc: "Acoustic sessions", icon: Heart },
+];
+
+const reviews = [
+  { name: "Sarah M.", text: "Best cocktails in the city. The atmosphere is unmatched!", rating: 5 },
+  { name: "James K.", text: "Harry's never disappoints. My go-to spot for dates.", rating: 5 },
+  { name: "Emma L.", text: "The bartenders are true artists. Every drink is a masterpiece.", rating: 5 },
+];
+
+const stats = [
+  { value: "60+", label: "Signature Drinks" },
+  { value: "5", label: "Years Running" },
+  { value: "10K+", label: "Happy Guests" },
+  { value: "15", label: "Awards Won" },
 ];
 
 const Index = () => {
   const [scrollY, setScrollY] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     setIsLoaded(true);
     const handleScroll = () => setScrollY(window.scrollY);
+    const handleMouse = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY });
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("mousemove", handleMouse);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("mousemove", handleMouse);
+    };
   }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      {/* Animated Background Orbs - Global */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div 
+          className="absolute w-[600px] h-[600px] bg-accent/20 rounded-full glow-orb animate-drift"
+          style={{ top: '10%', left: '10%' }}
+        />
+        <div 
+          className="absolute w-[400px] h-[400px] bg-accent/10 rounded-full glow-orb animate-float-slow"
+          style={{ top: '50%', right: '5%', animationDelay: '2s' }}
+        />
+        <div 
+          className="absolute w-[300px] h-[300px] bg-accent/15 rounded-full glow-orb animate-float-reverse"
+          style={{ bottom: '10%', left: '20%', animationDelay: '4s' }}
+        />
+        {/* Mouse follower */}
+        <div 
+          className="absolute w-64 h-64 bg-accent/10 rounded-full glow-orb transition-all duration-1000 ease-out"
+          style={{ 
+            left: mousePos.x - 128, 
+            top: mousePos.y - 128,
+          }}
+        />
+      </div>
+
       {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrollY > 50 ? 'bg-background/90 backdrop-blur-lg border-b border-border' : ''}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrollY > 50 ? 'bg-background/80 backdrop-blur-xl border-b border-border' : ''}`}>
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <a href="#" className="font-display text-2xl font-semibold tracking-wide">
-            <span className="text-gradient">NOIR</span>
-            <span className="text-muted-foreground ml-2 text-lg font-body font-light">BAR</span>
+            <span className="text-gradient">Harry's</span>
           </a>
           <div className="hidden md:flex items-center gap-8 font-body text-sm">
-            <a href="#menu" className="text-muted-foreground hover:text-foreground transition-colors">Меню</a>
-            <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">О нас</a>
-            <a href="#contact" className="text-muted-foreground hover:text-foreground transition-colors">Контакты</a>
+            <a href="#menu" className="text-muted-foreground hover:text-foreground transition-colors">Menu</a>
+            <a href="#events" className="text-muted-foreground hover:text-foreground transition-colors">Events</a>
+            <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">About</a>
+            <a href="#contact" className="text-muted-foreground hover:text-foreground transition-colors">Contact</a>
             <Button variant="outline" size="sm" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground">
-              Забронировать
+              Book a Table
             </Button>
           </div>
         </div>
@@ -80,15 +99,29 @@ const Index = () => {
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center noise">
-        {/* Animated background elements */}
+        {/* Animated geometric shapes */}
         <div className="absolute inset-0 overflow-hidden">
           <div 
-            className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-float"
+            className="absolute top-20 left-20 w-32 h-32 border border-accent/20 rounded-full animate-rotate-slow"
             style={{ transform: `translateY(${scrollY * 0.1}px)` }}
           />
           <div 
-            className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/5 rounded-full blur-3xl animate-float"
-            style={{ animationDelay: '2s', transform: `translateY(${scrollY * -0.05}px)` }}
+            className="absolute top-40 right-32 w-24 h-24 border border-accent/10 animate-rotate-reverse"
+            style={{ transform: `translateY(${scrollY * -0.05}px)` }}
+          />
+          <div 
+            className="absolute bottom-32 left-1/4 w-16 h-16 bg-accent/10 animate-morph"
+          />
+          <div 
+            className="absolute top-1/3 right-1/4 w-4 h-4 bg-accent rounded-full animate-sparkle"
+          />
+          <div 
+            className="absolute bottom-1/4 right-1/3 w-3 h-3 bg-accent rounded-full animate-sparkle"
+            style={{ animationDelay: '0.5s' }}
+          />
+          <div 
+            className="absolute top-1/2 left-1/3 w-2 h-2 bg-accent rounded-full animate-sparkle"
+            style={{ animationDelay: '1s' }}
           />
         </div>
 
@@ -98,25 +131,25 @@ const Index = () => {
               className="font-body text-accent uppercase tracking-[0.3em] text-sm mb-6 animate-fade-up"
               style={{ animationDelay: '0.2s' }}
             >
-              Добро пожаловать в
+              Welcome to
             </p>
             <h1 
-              className="font-display text-[clamp(4rem,15vw,12rem)] font-semibold leading-none mb-4 animate-fade-up text-shadow"
+              className="font-display text-[clamp(4rem,18vw,14rem)] font-semibold leading-none mb-4 animate-fade-up text-shadow"
               style={{ animationDelay: '0.4s' }}
             >
-              <span className="text-gradient">NOIR</span>
+              <span className="text-gradient">Harry's</span>
             </h1>
             <p 
-              className="font-display text-[clamp(1.5rem,5vw,3rem)] italic text-muted-foreground mb-8 animate-fade-up"
+              className="font-display text-[clamp(1.5rem,4vw,2.5rem)] italic text-muted-foreground mb-8 animate-fade-up"
               style={{ animationDelay: '0.6s' }}
             >
-              Cocktails & Atmosphere
+              Cocktails & Good Vibes
             </p>
             <p 
-              className="font-body text-muted-foreground max-w-xl mx-auto text-lg mb-12 leading-relaxed animate-fade-up"
+              className="font-body text-muted-foreground max-w-xl mx-auto text-lg mb-10 leading-relaxed animate-fade-up"
               style={{ animationDelay: '0.8s' }}
             >
-              Место, где каждый коктейль — это история, а каждый вечер — незабываемое приключение
+              Where every cocktail tells a story and every night becomes unforgettable
             </p>
             <div 
               className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-up"
@@ -124,16 +157,17 @@ const Index = () => {
             >
               <Button 
                 size="lg" 
-                className="bg-accent text-accent-foreground hover:bg-accent/90 font-body px-8 py-6 text-base shadow-glow hover-glow transition-all"
+                className="bg-accent text-accent-foreground hover:bg-accent/90 font-body px-8 py-6 text-base shadow-glow hover-glow transition-all group"
               >
-                Забронировать столик
+                Book a Table
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button 
                 variant="outline" 
                 size="lg"
                 className="border-border text-foreground hover:bg-secondary font-body px-8 py-6 text-base"
               >
-                Смотреть меню
+                View Menu
               </Button>
             </div>
           </div>
@@ -145,22 +179,24 @@ const Index = () => {
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground hover:text-accent transition-colors cursor-pointer animate-fade-in"
           style={{ animationDelay: '1.5s' }}
         >
-          <span className="font-body text-xs uppercase tracking-widest">Листайте</span>
+          <span className="font-body text-xs uppercase tracking-widest">Scroll</span>
           <ChevronDown className="w-5 h-5 animate-bounce" />
         </a>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-24 bg-gradient-dark relative">
+      <section id="features" className="py-16 bg-gradient-dark relative">
         <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6">
             {features.map((feature, index) => (
               <div 
                 key={feature.title}
                 className="text-center p-8 rounded-2xl bg-gradient-card border border-border hover-lift hover-glow transition-all animate-fade-up"
-                style={{ animationDelay: `${index * 0.2}s` }}
+                style={{ animationDelay: `${index * 0.15}s` }}
               >
-                <feature.icon className="w-10 h-10 text-accent mx-auto mb-4" />
+                <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4 animate-pulse-glow">
+                  <feature.icon className="w-8 h-8 text-accent" />
+                </div>
                 <h3 className="font-display text-xl mb-2">{feature.title}</h3>
                 <p className="font-body text-muted-foreground text-sm">{feature.desc}</p>
               </div>
@@ -169,18 +205,37 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Stats Bar */}
+      <section className="py-12 border-y border-border relative overflow-hidden">
+        <div className="absolute inset-0 bg-accent/5" />
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
+              <div 
+                key={stat.label} 
+                className="text-center animate-fade-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <p className="font-display text-4xl md:text-5xl text-gradient mb-1">{stat.value}</p>
+                <p className="font-body text-muted-foreground text-sm">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Menu Section */}
-      <section id="menu" className="py-32 relative noise">
+      <section id="menu" className="py-20 relative noise">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <p className="font-body text-accent uppercase tracking-[0.2em] text-sm mb-4">Откройте для себя</p>
-            <h2 className="font-display text-5xl md:text-6xl font-semibold mb-6">
-              Наши <span className="text-gradient">Signature</span> коктейли
+          <div className="text-center mb-12">
+            <p className="font-body text-accent uppercase tracking-[0.2em] text-sm mb-3">Discover</p>
+            <h2 className="font-display text-4xl md:text-5xl font-semibold mb-4">
+              Our <span className="text-gradient">Signature</span> Cocktails
             </h2>
             <div className="w-24 h-0.5 bg-gradient-gold mx-auto" />
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl mx-auto">
             {cocktails.map((cocktail, index) => (
               <div 
                 key={cocktail.name}
@@ -192,6 +247,9 @@ const Index = () => {
                     {cocktail.tag}
                   </span>
                 )}
+                <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-4 group-hover:animate-pulse-glow">
+                  <Wine className="w-6 h-6 text-accent" />
+                </div>
                 <h3 className="font-display text-2xl mb-2 group-hover:text-gradient transition-all">
                   {cocktail.name}
                 </h3>
@@ -203,140 +261,218 @@ const Index = () => {
             ))}
           </div>
 
-          <div className="text-center mt-12">
+          <div className="text-center mt-10">
             <Button 
               variant="outline" 
               size="lg"
-              className="border-accent text-accent hover:bg-accent hover:text-accent-foreground font-body"
+              className="border-accent text-accent hover:bg-accent hover:text-accent-foreground font-body group"
             >
-              Полное меню
+              Full Menu
+              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-32 bg-gradient-dark relative overflow-hidden">
-        <div className="absolute -left-1/4 top-0 w-1/2 h-full bg-accent/5 blur-3xl rounded-full" />
+      {/* Events Section */}
+      <section id="events" className="py-20 bg-gradient-dark relative">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-accent/5 blur-3xl rounded-full" />
         <div className="container mx-auto px-6 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="animate-slide-right">
-              <p className="font-body text-accent uppercase tracking-[0.2em] text-sm mb-4">О нас</p>
-              <h2 className="font-display text-5xl md:text-6xl font-semibold mb-8 leading-tight">
-                Искусство <br />
-                <span className="text-gradient">коктейлей</span>
-              </h2>
-              <p className="font-body text-muted-foreground text-lg leading-relaxed mb-6">
-                NOIR — это не просто бар. Это место, где традиции смешиваются с инновациями, 
-                а каждый напиток создается с любовью к деталям. Наши бармены — настоящие 
-                художники, превращающие ингредиенты в произведения искусства.
-              </p>
-              <p className="font-body text-muted-foreground text-lg leading-relaxed mb-8">
-                Мы верим, что идеальный коктейль — это больше, чем просто напиток. 
-                Это история, которую хочется рассказать, и воспоминание, которое останется надолго.
-              </p>
-              <div className="flex gap-8">
-                <div>
-                  <p className="font-display text-4xl text-gradient">60+</p>
-                  <p className="font-body text-sm text-muted-foreground">авторских коктейлей</p>
-                </div>
-                <div>
-                  <p className="font-display text-4xl text-gradient">5</p>
-                  <p className="font-body text-sm text-muted-foreground">лет опыта</p>
-                </div>
-                <div>
-                  <p className="font-display text-4xl text-gradient">10K+</p>
-                  <p className="font-body text-sm text-muted-foreground">довольных гостей</p>
+          <div className="text-center mb-12">
+            <p className="font-body text-accent uppercase tracking-[0.2em] text-sm mb-3">What's On</p>
+            <h2 className="font-display text-4xl md:text-5xl font-semibold mb-4">
+              Weekly <span className="text-gradient">Events</span>
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {events.map((event, index) => (
+              <div 
+                key={event.name}
+                className="relative p-6 rounded-2xl bg-gradient-card border border-border hover-lift hover-glow transition-all animate-fade-up overflow-hidden group"
+                style={{ animationDelay: `${index * 0.15}s` }}
+              >
+                <div className="absolute top-0 right-0 w-20 h-20 bg-accent/10 rounded-full blur-2xl group-hover:bg-accent/20 transition-colors" />
+                <span className="inline-block px-3 py-1 rounded-full text-xs font-body font-semibold bg-accent text-accent-foreground mb-4">
+                  {event.day}
+                </span>
+                <event.icon className="w-10 h-10 text-accent mb-4" />
+                <h3 className="font-display text-2xl mb-2">{event.name}</h3>
+                <p className="font-body text-muted-foreground text-sm">{event.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Reviews Section */}
+      <section className="py-20 relative noise">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-12">
+            <p className="font-body text-accent uppercase tracking-[0.2em] text-sm mb-3">Testimonials</p>
+            <h2 className="font-display text-4xl md:text-5xl font-semibold mb-4">
+              What Our <span className="text-gradient">Guests</span> Say
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {reviews.map((review, index) => (
+              <div 
+                key={review.name}
+                className="p-6 rounded-2xl bg-gradient-card border border-border hover-lift transition-all animate-fade-up"
+                style={{ animationDelay: `${index * 0.15}s` }}
+              >
+                <Quote className="w-8 h-8 text-accent/30 mb-4" />
+                <p className="font-body text-foreground mb-4 leading-relaxed">"{review.text}"</p>
+                <div className="flex items-center gap-2">
+                  <div className="flex">
+                    {[...Array(review.rating)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 text-accent fill-accent" />
+                    ))}
+                  </div>
+                  <span className="font-body text-muted-foreground text-sm">— {review.name}</span>
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="py-20 bg-gradient-dark relative overflow-hidden">
+        <div className="absolute -left-1/4 top-0 w-1/2 h-full bg-accent/5 blur-3xl rounded-full" />
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="animate-slide-right">
+              <p className="font-body text-accent uppercase tracking-[0.2em] text-sm mb-3">About Us</p>
+              <h2 className="font-display text-4xl md:text-5xl font-semibold mb-6 leading-tight">
+                The Art of <br />
+                <span className="text-gradient">Mixology</span>
+              </h2>
+              <p className="font-body text-muted-foreground text-lg leading-relaxed mb-4">
+                Harry's is more than a bar. It's where tradition meets innovation, 
+                and every drink is crafted with love for detail. Our bartenders are 
+                true artists, turning ingredients into works of art.
+              </p>
+              <p className="font-body text-muted-foreground text-lg leading-relaxed mb-6">
+                We believe the perfect cocktail is more than just a drink. 
+                It's a story worth telling and a memory that lasts.
+              </p>
+              <Button 
+                className="bg-accent text-accent-foreground hover:bg-accent/90 font-body group"
+              >
+                Learn More
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
             </div>
-            <div className="relative animate-slide-left" style={{ animationDelay: '0.3s' }}>
-              <div className="aspect-[4/5] rounded-2xl bg-gradient-card border border-border overflow-hidden shadow-card">
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/80" />
+            <div className="relative animate-slide-left" style={{ animationDelay: '0.2s' }}>
+              <div className="aspect-square rounded-2xl bg-gradient-card border border-border overflow-hidden shadow-card relative">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="w-32 h-32 rounded-full border-2 border-accent/30 flex items-center justify-center mx-auto mb-4 animate-pulse-glow">
-                      <Sparkles className="w-12 h-12 text-accent" />
+                    <div className="w-40 h-40 rounded-full border-2 border-accent/30 flex items-center justify-center mx-auto mb-4 animate-pulse-glow animate-rotate-slow">
+                      <div className="w-32 h-32 rounded-full border border-accent/20 flex items-center justify-center animate-rotate-reverse">
+                        <Sparkles className="w-12 h-12 text-accent" />
+                      </div>
                     </div>
-                    <p className="font-display text-2xl text-gradient">NOIR</p>
+                    <p className="font-display text-3xl text-gradient">Harry's</p>
                     <p className="font-body text-muted-foreground text-sm">Est. 2019</p>
                   </div>
                 </div>
               </div>
               {/* Decorative elements */}
-              <div className="absolute -top-4 -right-4 w-24 h-24 border border-accent/20 rounded-full" />
-              <div className="absolute -bottom-8 -left-8 w-32 h-32 border border-accent/10 rounded-full" />
+              <div className="absolute -top-4 -right-4 w-24 h-24 border border-accent/20 rounded-full animate-float" />
+              <div className="absolute -bottom-8 -left-8 w-32 h-32 border border-accent/10 rounded-full animate-float-reverse" />
             </div>
           </div>
         </div>
       </section>
 
+      {/* Instagram Section */}
+      <section className="py-16 relative">
+        <div className="container mx-auto px-6 text-center">
+          <a 
+            href="#" 
+            className="inline-flex items-center gap-3 text-muted-foreground hover:text-accent transition-colors group"
+          >
+            <Instagram className="w-6 h-6" />
+            <span className="font-body text-lg">Follow us @harrysbar</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </a>
+        </div>
+      </section>
+
       {/* Contact Section */}
-      <section id="contact" className="py-32 relative noise">
+      <section id="contact" className="py-20 relative noise">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <p className="font-body text-accent uppercase tracking-[0.2em] text-sm mb-4">Приходите к нам</p>
-            <h2 className="font-display text-5xl md:text-6xl font-semibold mb-6">
-              <span className="text-gradient">Контакты</span>
+          <div className="text-center mb-12">
+            <p className="font-body text-accent uppercase tracking-[0.2em] text-sm mb-3">Visit Us</p>
+            <h2 className="font-display text-4xl md:text-5xl font-semibold mb-4">
+              <span className="text-gradient">Get in Touch</span>
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="text-center p-8 rounded-2xl bg-gradient-card border border-border hover-lift transition-all">
-              <MapPin className="w-8 h-8 text-accent mx-auto mb-4" />
-              <h3 className="font-display text-xl mb-2">Адрес</h3>
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12">
+            <div className="text-center p-6 rounded-2xl bg-gradient-card border border-border hover-lift transition-all">
+              <div className="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4">
+                <MapPin className="w-6 h-6 text-accent" />
+              </div>
+              <h3 className="font-display text-xl mb-2">Location</h3>
               <p className="font-body text-muted-foreground text-sm">
-                ул. Большая Садовая, 12<br />
-                Москва, Россия
+                123 Main Street<br />
+                New York, NY
               </p>
             </div>
-            <div className="text-center p-8 rounded-2xl bg-gradient-card border border-border hover-lift transition-all">
-              <Clock className="w-8 h-8 text-accent mx-auto mb-4" />
-              <h3 className="font-display text-xl mb-2">Часы работы</h3>
+            <div className="text-center p-6 rounded-2xl bg-gradient-card border border-border hover-lift transition-all">
+              <div className="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4">
+                <Clock className="w-6 h-6 text-accent" />
+              </div>
+              <h3 className="font-display text-xl mb-2">Hours</h3>
               <p className="font-body text-muted-foreground text-sm">
-                Пт — Сб: 19:00 — 06:00<br />
-                Вс — Чт: 18:00 — 03:00
+                Fri — Sat: 7PM — 4AM<br />
+                Sun — Thu: 6PM — 2AM
               </p>
             </div>
-            <div className="text-center p-8 rounded-2xl bg-gradient-card border border-border hover-lift transition-all">
-              <Phone className="w-8 h-8 text-accent mx-auto mb-4" />
-              <h3 className="font-display text-xl mb-2">Бронирование</h3>
+            <div className="text-center p-6 rounded-2xl bg-gradient-card border border-border hover-lift transition-all">
+              <div className="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4">
+                <Phone className="w-6 h-6 text-accent" />
+              </div>
+              <h3 className="font-display text-xl mb-2">Reservations</h3>
               <p className="font-body text-muted-foreground text-sm">
-                +7 (495) 123-45-67<br />
-                hello@noir-bar.ru
+                +1 (555) 123-4567<br />
+                hello@harrysbar.com
               </p>
             </div>
           </div>
 
-          <div className="text-center mt-16">
+          <div className="text-center">
             <Button 
               size="lg" 
-              className="bg-accent text-accent-foreground hover:bg-accent/90 font-body px-12 py-6 text-base shadow-glow hover-glow transition-all"
+              className="bg-accent text-accent-foreground hover:bg-accent/90 font-body px-12 py-6 text-base shadow-glow hover-glow transition-all group"
             >
-              Забронировать столик
+              Book Your Table
+              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 border-t border-border bg-gradient-dark">
+      <footer className="py-10 border-t border-border bg-gradient-dark">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="font-display text-xl">
-              <span className="text-gradient">NOIR</span>
-              <span className="text-muted-foreground ml-2 text-base font-body font-light">BAR</span>
+              <span className="text-gradient">Harry's</span>
             </div>
             <div className="flex gap-6">
-              <a href="#" className="text-muted-foreground hover:text-accent transition-colors">
+              <a href="#" className="text-muted-foreground hover:text-accent transition-colors hover:scale-110 transform">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-accent transition-colors">
+              <a href="#" className="text-muted-foreground hover:text-accent transition-colors hover:scale-110 transform">
                 <Phone className="w-5 h-5" />
               </a>
             </div>
             <p className="font-body text-muted-foreground text-sm">
-              © 2024 NOIR BAR. Все права защищены.
+              © 2024 Harry's Bar. All rights reserved.
             </p>
           </div>
         </div>
