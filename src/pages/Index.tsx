@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { MapPin, Clock, Phone, Instagram, ChevronDown, Star, Sparkles, Wine, Music, Users, Quote, ArrowRight, Zap, Heart } from "lucide-react";
+import { MapPin, Clock, Phone, Instagram, ChevronDown, Star, Sparkles, Wine, Music, Users, Quote, ArrowRight, Zap, Heart, Award, GlassWater } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // Import images
@@ -34,6 +34,12 @@ const reviews = [
   { name: "Sarah M.", text: "Best cocktails in the city. The atmosphere is unmatched!", rating: 5 },
   { name: "James K.", text: "Harry's never disappoints. My go-to spot for dates.", rating: 5 },
   { name: "Emma L.", text: "The bartenders are true artists. Every drink is a masterpiece.", rating: 5 },
+];
+
+const bartenders = [
+  { name: "Marcus Cole", role: "Head Mixologist", specialty: "Classic Revival", years: 12, image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=faces" },
+  { name: "Sophia Chen", role: "Creative Director", specialty: "Asian Fusion", years: 8, image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=faces" },
+  { name: "James Wright", role: "Senior Bartender", specialty: "Molecular", years: 6, image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=faces" },
 ];
 
 const stats = [
@@ -426,6 +432,66 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Meet Our Team Section */}
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent/10 animate-gradient-x" />
+        <div className="absolute top-10 left-10 w-40 h-40 border border-accent/10 rounded-full animate-rotate-slow" />
+        <div className="absolute bottom-10 right-10 w-60 h-60 border border-accent/5 rounded-full animate-rotate-reverse" />
+        
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="text-center mb-12">
+            <p className="font-body text-accent uppercase tracking-[0.2em] text-sm mb-3 animate-sway">The Artists</p>
+            <h2 className="font-display text-4xl md:text-5xl font-semibold mb-4">
+              Meet Our <span className="text-gradient">Bartenders</span>
+            </h2>
+            <div className="w-24 h-0.5 bg-gradient-gold mx-auto animate-shimmer" style={{ backgroundSize: '200% 100%' }} />
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {bartenders.map((bartender, index) => (
+              <div 
+                key={bartender.name}
+                className="group relative rounded-2xl bg-gradient-card border border-border hover:border-accent/30 hover-lift transition-all animate-fade-up overflow-hidden"
+                style={{ animationDelay: `${index * 0.15}s` }}
+              >
+                {/* Image */}
+                <div className="relative h-64 overflow-hidden shine">
+                  <img 
+                    src={bartender.image} 
+                    alt={bartender.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
+                  
+                  {/* Floating badge */}
+                  <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-body font-medium bg-accent/90 text-accent-foreground flex items-center gap-1 animate-pulse-glow">
+                    <Award className="w-3 h-3" />
+                    {bartender.years}+ years
+                  </div>
+                </div>
+                
+                {/* Content */}
+                <div className="p-6 relative">
+                  <div className="absolute -top-8 left-6 w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center border-4 border-card animate-float">
+                    <GlassWater className="w-6 h-6 text-accent" />
+                  </div>
+                  <div className="pt-6">
+                    <h3 className="font-display text-2xl mb-1 group-hover:text-gradient transition-all">
+                      {bartender.name}
+                    </h3>
+                    <p className="font-body text-accent text-sm mb-3">{bartender.role}</p>
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                      <Sparkles className="w-4 h-4 text-accent/60 animate-sparkle" />
+                      <span className="font-body text-sm">Specialty: {bartender.specialty}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Instagram Section */}
       <section className="py-16 relative overflow-hidden">
         {/* Animated gradient background */}
@@ -513,7 +579,7 @@ const Index = () => {
               </a>
             </div>
             <p className="font-body text-muted-foreground text-sm">
-              © 2024 Harry's Bar. All rights reserved.
+              © 2026 Harry's Bar. All rights reserved.
             </p>
           </div>
         </div>
